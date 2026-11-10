@@ -1,65 +1,404 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="./css/main.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Willer Nunes Moreira — Dados & Agentes de IA</title>
+<meta name="description" content="Portfólio de Willer Nunes Moreira: análise de dados (SQL, Python, Power BI) e agentes de IA com n8n.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet">
+<style>
+  /* ============ CONFIGURAÇÃO RÁPIDA ============
+     Links e URL do n8n ficam no <script> CONFIG no fim da página. */
+  :root{
+    --bg:#0f1115; --bg2:#161a21; --card:#1b2029; --line:#2a313d;
+    --txt:#e7eaf0; --muted:#9aa3b2; --accent:#f5b301; --accent2:#3fb6a8;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Space Grotesk',system-ui,sans-serif;background:var(--bg);color:var(--txt);line-height:1.6}
+  a{color:inherit}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+  .mono{font-family:'JetBrains Mono',monospace}
+
+  /* nav */
+  nav{position:sticky;top:0;z-index:50;background:rgba(15,17,21,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
+  .logo{font-weight:700;letter-spacing:.5px;text-decoration:none}
+  .logo span{color:var(--accent)}
+  .links{display:flex;gap:22px;align-items:center}
+  .links a{text-decoration:none;color:var(--muted);font-size:.95rem}
+  .links a:hover{color:var(--txt)}
+  .lang{background:none;border:1px solid var(--line);color:var(--txt);border-radius:8px;padding:5px 10px;cursor:pointer;font-family:inherit}
+  .lang:hover{border-color:var(--accent)}
+  @media(max-width:720px){.links a{display:none}}
+
+  /* hero */
+  header{padding:96px 0 72px;position:relative;overflow:hidden}
+  header::before{content:"";position:absolute;inset:0;background:
+     repeating-linear-gradient(135deg,transparent 0 22px,rgba(245,179,1,.04) 22px 44px);
+     mask-image:linear-gradient(to bottom,#000,transparent 85%)}
+  .tag{display:inline-block;font-size:.8rem;color:var(--accent);border:1px solid rgba(245,179,1,.35);padding:4px 10px;border-radius:99px;margin-bottom:22px}
+  h1{font-size:clamp(2.2rem,5.5vw,3.8rem);line-height:1.1;max-width:820px}
+  h1 em{font-style:normal;color:var(--accent)}
+  .lead{color:var(--muted);font-size:1.15rem;max-width:640px;margin:20px 0 32px}
+  .btns{display:flex;gap:12px;flex-wrap:wrap}
+  .btn{display:inline-block;padding:12px 20px;border-radius:10px;text-decoration:none;font-weight:500;border:1px solid var(--line)}
+  .btn.primary{background:var(--accent);color:#111;border-color:var(--accent)}
+  .btn:hover{transform:translateY(-1px)}
+
+  section{padding:72px 0;border-top:1px solid var(--line)}
+  .kicker{font-size:.8rem;color:var(--accent2);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
+  h2{font-size:clamp(1.7rem,3.5vw,2.4rem);margin-bottom:14px}
+  .sub{color:var(--muted);max-width:680px;margin-bottom:36px}
+
+  /* sobre */
+  .about{display:grid;grid-template-columns:1.3fr 1fr;gap:40px}
+  @media(max-width:820px){.about{grid-template-columns:1fr}}
+  .about p{color:var(--muted);margin-bottom:14px}
+  .about strong{color:var(--txt)}
+  .timeline{border-left:2px solid var(--line);padding-left:20px}
+  .tl{position:relative;margin-bottom:22px}
+  .tl::before{content:"";position:absolute;left:-27px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--accent)}
+  .tl .when{font-size:.78rem;color:var(--accent)}
+  .tl .what{font-weight:500}
+  .tl .where{color:var(--muted);font-size:.9rem}
+
+  .skills{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
+  .chip{font-size:.82rem;padding:5px 11px;border-radius:99px;background:var(--bg2);border:1px solid var(--line)}
+
+  /* cards */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;display:flex;flex-direction:column}
+  .card.feature{grid-column:1/-1}
+  .card h3{font-size:1.25rem;margin:6px 0 10px}
+  .card p{color:var(--muted);font-size:.97rem}
+  .card ul{color:var(--muted);font-size:.95rem;margin:12px 0 0 18px}
+  .status{font-size:.75rem;align-self:flex-start;padding:3px 9px;border-radius:99px}
+  .status.live{background:rgba(63,182,168,.15);color:var(--accent2)}
+  .status.wip{background:rgba(245,179,1,.12);color:var(--accent)}
+  .stack{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+  .stack span{font-size:.75rem;padding:3px 8px;border-radius:6px;background:var(--bg2);color:var(--muted)}
+  .card .more{margin-top:auto;padding-top:18px;display:flex;gap:16px}
+  .card .more a{color:var(--accent);font-size:.92rem;text-decoration:none}
+  .card .more a:hover{text-decoration:underline}
+
+  .feature-inner{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+  @media(max-width:820px){.feature-inner{grid-template-columns:1fr}}
+  .shot{background:var(--bg2);border:1px dashed var(--line);border-radius:10px;min-height:220px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:.85rem;text-align:center;padding:16px;overflow:hidden}
+  .shot img{max-width:100%;border-radius:8px;display:block}
+
+  /* fluxo do agente */
+  .flow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:16px 0}
+  .node{background:var(--bg2);border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-size:.8rem}
+  .arrow{color:var(--accent)}
+
+  /* chat */
+  #mantenix-chat{height:460px;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--bg2)}
+  .chat-off{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:var(--muted);padding:24px;gap:8px}
+  .chat-off b{color:var(--txt)}
+  :root{
+    --chat--color-primary:#f5b301; --chat--color-primary-shade-50:#d99e00;
+    --chat--color-secondary:#3fb6a8; --chat--color-dark:#0f1115;
+    --chat--header--background:#1b2029; --chat--header--color:#e7eaf0;
+    --chat--body--background:#161a21; --chat--footer--background:#1b2029;
+    --chat--message--bot--background:#232a35; --chat--message--bot--color:#e7eaf0;
+    --chat--message--user--background:#f5b301; --chat--message--user--color:#111;
+    --chat--input--background:#0f1115; --chat--input--text-color:#e7eaf0;
+    --chat--border-radius:10px; --chat--font-family:'Space Grotesk',sans-serif;
+  }
+
+  footer{border-top:1px solid var(--line);padding:48px 0;color:var(--muted)}
+  .contact{display:flex;gap:14px;flex-wrap:wrap;margin:18px 0 28px}
+  .small{font-size:.82rem}
+</style>
 </head>
 <body>
-    <container class="esquerda">
-        <div class="header">
-            <img id="profile" src="./img/foto.webp" alt="">
-            <h3>Willer Nunes</h3>
-            <p id="title">Analista de dados(diz ele)</p>
-            <p id="local">Nova Lima, MG</p>
-        </div>
-        <div class="icons">
-            <a href="https://github.com/willernunes">
-                <img class="logo" src="./img/git-logo.png" alt="">
-            </a>
-            <a href="https://www.linkedin.com/in/willernunes/">
-                <img class="logo" src="./img/linkedin.png">
-            </a>
-        </div>
 
-        <div class="about">
-            <p>About</p><br>
-            <p>Olá, meu nome é Willer, tenho 20 anos e moro em Nova Lima. Atualmente, estou cursando Tecnologia em Banco de Dados na modalidade EAD.
-            Possuo experiência em Microsoft Excel, Microsoft Word, Google Sheets e no Pacote LibreOffice, além de conhecimentos em SQL, Python e Power BI. Estou constantemente aprimorando por novas formas de inovar dentro da área de dados.
-            </p>
-        </div>
+<nav>
+  <div class="wrap">
+    <a href="#top" class="logo">willer<span>.</span>dados</a>
+    <div class="links">
+      <a href="#sobre" data-i18n="nav_about">Sobre</a>
+      <a href="#dados" data-i18n="nav_data">Análise de Dados</a>
+      <a href="#agentes" data-i18n="nav_agents">Agentes de IA</a>
+      <a href="#contato" data-i18n="nav_contact">Contato</a>
+      <button class="lang" id="langBtn" aria-label="Mudar idioma">EN</button>
+    </div>
+  </div>
+</nav>
 
+<header id="top">
+  <div class="wrap">
+    <span class="tag mono" data-i18n="hero_tag">Ciência de Dados · Automação · IA</span>
+    <h1 data-i18n-html="hero_title">Transformo dados em <em>decisões</em> e processos em <em>automações com IA</em>.</h1>
+    <p class="lead" data-i18n="hero_lead">Sou Willer Nunes Moreira, tecnólogo em Ciência de Dados e Mediador de Tecnologia. Uso SQL, Python, Power BI e n8n para analisar dados, criar dashboards e construir agentes de IA.</p>
+    <div class="btns">
+      <a href="#dados" class="btn primary" data-i18n="hero_btn1">Ver projetos</a>
+      <a href="#agentes" class="btn" data-i18n="hero_btn2">Testar um agente de IA</a>
+    </div>
+  </div>
+</header>
+
+<section id="sobre">
+  <div class="wrap">
+    <div class="kicker mono" data-i18n="about_kicker">01 · Sobre</div>
+    <h2 data-i18n="about_title">Tecnologia, dados e automação</h2>
+    <div class="about">
+      <div>
+        <p data-i18n-html="about_p1">Sou <strong>tecnólogo em Ciência de Dados</strong> e trabalho como <strong>Mediador de Tecnologia</strong> na Prefeitura de Nova Lima, com aulas de informática e suporte de TI nas escolas da rede.</p>
+        <p data-i18n-html="about_p2">Meu foco é <strong>análise de dados</strong> (SQL, Python e dashboards em Power BI) e <strong>automação com IA</strong>: agentes no n8n que atendem, consultam dados e organizam tarefas, rodando na minha própria VPS.</p>
+        <p data-i18n="about_p3">Antes da tecnologia, atuei por 4 anos na indústria e na mineração, como mecânico e eletricista. Essa vivência me deu uma visão prática de operações, que levo para os projetos de dados.</p>
         <div class="skills">
-            <p>Skills</p><br>
-            <div class="tags">
-                <ul>
-                    <li>SQL</li>
-                    <li>Excel</li>
-                    <li>Power BI</li>
-                    <li>Python</li>
-                </ul>
-            </div>
+          <span class="chip">SQL</span><span class="chip">Python · pandas</span><span class="chip">Power BI</span><span class="chip">Tableau</span><span class="chip" data-i18n="skill_excel">Excel avançado</span><span class="chip">n8n</span><span class="chip">LLMs · Gemini / Claude</span><span class="chip">VPS Linux</span><span class="chip">Git · GitHub</span>
         </div>
-    </container>
+      </div>
+      <div class="timeline">
+        <div class="tl"><div class="when mono">2024 →</div><div class="what" data-i18n="tl1_what">Mediador de Tecnologia</div><div class="where" data-i18n="tl1_where">Prefeitura de Nova Lima: aulas e suporte de TI nas escolas</div></div>
+        <div class="tl"><div class="when mono">2026</div><div class="what" data-i18n="tl2_what">Tecnólogo em Ciência de Dados</div><div class="where">Gran Faculdade</div></div>
+        <div class="tl"><div class="when mono" data-i18n="tl3_when">até 2024</div><div class="what" data-i18n="tl3_what">Estagiário de TI</div><div class="where">Prefeitura de Nova Lima</div></div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <container class="direita">
-        <div class="projetos">
-            <div class="card">
-                <h3>Projeto 1</h3>
-                <img src="./img/projeto1.jpeg">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident dolores perspiciatis cum rem laudantium vitae possimus amet tenetur commodi maxime quam recusandae, illum, magnam iste dolorum officia? Fugiat, adipisci consectetur!.</p>
-                <button>Saiba mais</button>
+<section id="dados">
+  <div class="wrap">
+    <div class="kicker mono" data-i18n="data_kicker">02 · Análise de Dados</div>
+    <h2 data-i18n="data_title">Projetos de análise</h2>
+    <p class="sub" data-i18n="data_sub">Perguntas de negócio, dados reais ou públicos e uma resposta clara no final, do SQL ao dashboard.</p>
+
+    <div class="grid">
+      <article class="card feature">
+        <div class="feature-inner">
+          <div>
+            <span class="status live" data-i18n="st_pub">Publicado</span>
+            <h3 data-i18n="p1_title">Análise de falhas e manutenção industrial</h3>
+            <p data-i18n="p1_desc">Análise do histórico de máquinas, falhas e manutenções com a base pública Microsoft Azure Predictive Maintenance. Mostra quais equipamentos e componentes mais falham, como as falhas se distribuem no tempo e onde a manutenção preventiva traria mais retorno.</p>
+            <ul>
+              <li data-i18n="p1_b1">Modelagem e consultas em SQL (tabelas machines, failures e maint)</li>
+              <li data-i18n="p1_b2">Dashboard interativo no Power BI</li>
+              <li data-i18n="p1_b3">Documentação em português e inglês</li>
+            </ul>
+            <div class="stack"><span>SQL</span><span>Power BI</span><span>Azure PdM dataset</span></div>
+            <div class="more">
+              <a href="#" data-link="p1_repo" data-i18n="lnk_repo">Repositório no GitHub →</a>
             </div>
-            <div class="card">
-                <h3>Projeto 2</h3>
-                <img src="./img/projeto1.jpeg">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit, unde? Sed rem, quidem ipsa molestiae voluptatem nulla harum dignissimos vero quis ut, ipsam possimus temporibus cumque eligendi, sit quia explicabo!</p>
-                <button>Saiba mais</button>
-            </div>
+          </div>
+          <div class="shot" id="p1_shot" data-i18n="shot_ph">[ Coloque aqui um print do dashboard: img/dashboard-manutencao.png ]</div>
         </div>
-    </container>
+      </article>
 
-    <script src="./js/main.js"></script>
+      <article class="card">
+        <span class="status wip" data-i18n="st_wip">Em construção</span>
+        <h3 data-i18n="p2_title">Próxima análise</h3>
+        <p data-i18n="p2_desc">Espaço reservado para o próximo projeto (por exemplo, uma análise em Python/pandas com dados públicos de educação ou de operação).</p>
+        <div class="stack"><span>Python</span><span>pandas</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="agentes">
+  <div class="wrap">
+    <div class="kicker mono" data-i18n="ag_kicker">03 · Agentes de IA</div>
+    <h2 data-i18n="ag_title">Agentes que trabalham de verdade</h2>
+    <p class="sub" data-i18n="ag_sub">Automações com n8n e modelos de linguagem, rodando na minha própria VPS. O Mantenix está no ar: pode testar aqui embaixo.</p>
+
+    <div class="grid">
+      <article class="card feature">
+        <div class="feature-inner">
+          <div>
+            <span class="status live" data-i18n="st_live">Ao vivo</span>
+            <h3 data-i18n="a1_title">Mantenix: assistente de manutenção industrial</h3>
+            <p data-i18n="a1_desc">Agente que responde dúvidas sobre falhas, manutenção e cuidados com equipamentos industriais. Usa a mesma base do projeto de análise de falhas e funciona tanto neste site quanto no Telegram (@Mantenix_bot).</p>
+            <div class="flow mono">
+              <span class="node" data-i18n="fl_site">Site / Telegram</span><span class="arrow">→</span>
+              <span class="node">n8n Trigger</span><span class="arrow">→</span>
+              <span class="node">AI Agent</span><span class="arrow">→</span>
+              <span class="node">Gemini</span><span class="arrow">+</span>
+              <span class="node" data-i18n="fl_mem">Memória</span>
+            </div>
+            <div class="stack"><span>n8n</span><span>Google Gemini</span><span>Telegram Bot API</span><span>VPS</span></div>
+            <div class="more">
+              <a href="#" data-link="mantenix_repo" data-i18n="lnk_wf">Workflow no GitHub →</a>
+              <a href="https://t.me/Mantenix_bot">Telegram →</a>
+            </div>
+          </div>
+          <div id="mantenix-chat"></div>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="status wip" data-i18n="st_wip">Em construção</span>
+        <h3 data-i18n="a2_title">Bot de atendimento</h3>
+        <p data-i18n="a2_desc">Atendimento no Telegram para uma empresa fictícia: responde o FAQ e registra pedidos automaticamente.</p>
+        <div class="stack"><span>n8n</span><span>Telegram</span><span>LLM</span></div>
+      </article>
+
+      <article class="card">
+        <span class="status wip" data-i18n="st_wip">Em construção</span>
+        <h3 data-i18n="a3_title">Triagem de e-mails</h3>
+        <p data-i18n="a3_desc">Classifica e-mails recebidos (urgente, orçamento, suporte) e sugere uma resposta pronta para revisão.</p>
+        <div class="stack"><span>n8n</span><span>Gmail</span><span>LLM</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<footer id="contato">
+  <div class="wrap">
+    <div class="kicker mono" data-i18n="ct_kicker">04 · Contato</div>
+    <h2 data-i18n="ct_title">Vamos conversar?</h2>
+    <p data-i18n="ct_sub">Aberto a vagas de dados (júnior/trainee) e projetos de automação. Português, inglês e espanhol.</p>
+    <div class="contact">
+      <a class="btn primary" href="#" data-link="linkedin">LinkedIn</a>
+      <a class="btn" href="#" data-link="github">GitHub</a>
+      <a class="btn" href="#" data-link="email" data-i18n="ct_email">E-mail</a>
+    </div>
+    <p class="small mono">© 2026 Willer Nunes Moreira · Nova Lima, MG</p>
+  </div>
+</footer>
+
+<script>
+/* ===================== CONFIG — edite só aqui ===================== */
+const CONFIG = {
+  // URL de produção do nó "Chat Trigger" do n8n (precisa ser https)
+  n8nChatUrl: "COLE_AQUI_A_URL_DO_CHAT_TRIGGER",
+  links: {
+    github:        "https://github.com/NuneszM",
+    linkedin:      "https://www.linkedin.com/in/willernunes/",
+    email:         "mailto:seu-email@exemplo.com",
+    p1_repo:       "https://github.com/SEU-USUARIO/REPO-DO-PROJETO-1",
+    mantenix_repo: "https://github.com/SEU-USUARIO/mantenix"
+  },
+  // print do dashboard (deixe "" para mostrar o espaço reservado)
+  p1Image: ""
+};
+/* ================================================================== */
+
+const T = {
+  pt:{
+    nav_about:"Sobre",nav_data:"Análise de Dados",nav_agents:"Agentes de IA",nav_contact:"Contato",
+    hero_tag:"Ciência de Dados · Automação · IA",
+    hero_title:"Transformo dados em <em>decisões</em> e processos em <em>automações com IA</em>.",
+    hero_lead:"Sou Willer Nunes Moreira, tecnólogo em Ciência de Dados e Mediador de Tecnologia. Uso SQL, Python, Power BI e n8n para analisar dados, criar dashboards e construir agentes de IA.",
+    hero_btn1:"Ver projetos",hero_btn2:"Testar um agente de IA",
+    about_kicker:"01 · Sobre",about_title:"Tecnologia, dados e automação",
+    about_p1:"Sou <strong>tecnólogo em Ciência de Dados</strong> e trabalho como <strong>Mediador de Tecnologia</strong> na Prefeitura de Nova Lima, com aulas de informática e suporte de TI nas escolas da rede.",
+    about_p2:"Meu foco é <strong>análise de dados</strong> (SQL, Python e dashboards em Power BI) e <strong>automação com IA</strong>: agentes no n8n que atendem, consultam dados e organizam tarefas, rodando na minha própria VPS.",
+    about_p3:"Antes da tecnologia, atuei por 4 anos na indústria e na mineração, como mecânico e eletricista. Essa vivência me deu uma visão prática de operações, que levo para os projetos de dados.",
+    skill_excel:"Excel avançado",
+    tl1_what:"Mediador de Tecnologia",tl1_where:"Prefeitura de Nova Lima: aulas e suporte de TI nas escolas",
+    tl2_what:"Tecnólogo em Ciência de Dados",tl3_when:"até 2024",tl3_what:"Estagiário de TI",
+    data_kicker:"02 · Análise de Dados",data_title:"Projetos de análise",
+    data_sub:"Perguntas de negócio, dados reais ou públicos e uma resposta clara no final, do SQL ao dashboard.",
+    st_pub:"Publicado",st_wip:"Em construção",st_live:"Ao vivo",
+    p1_title:"Análise de falhas e manutenção industrial",
+    p1_desc:"Análise do histórico de máquinas, falhas e manutenções com a base pública Microsoft Azure Predictive Maintenance. Mostra quais equipamentos e componentes mais falham, como as falhas se distribuem no tempo e onde a manutenção preventiva traria mais retorno.",
+    p1_b1:"Modelagem e consultas em SQL (tabelas machines, failures e maint)",p1_b2:"Dashboard interativo no Power BI",p1_b3:"Documentação em português e inglês",
+    lnk_repo:"Repositório no GitHub →",shot_ph:"[ Coloque aqui um print do dashboard: img/dashboard-manutencao.png ]",
+    p2_title:"Próxima análise",p2_desc:"Espaço reservado para o próximo projeto (por exemplo, uma análise em Python/pandas com dados públicos de educação ou de operação).",
+    ag_kicker:"03 · Agentes de IA",ag_title:"Agentes que trabalham de verdade",
+    ag_sub:"Automações com n8n e modelos de linguagem, rodando na minha própria VPS. O Mantenix está no ar: pode testar aqui embaixo.",
+    a1_title:"Mantenix: assistente de manutenção industrial",
+    a1_desc:"Agente que responde dúvidas sobre falhas, manutenção e cuidados com equipamentos industriais. Usa a mesma base do projeto de análise de falhas e funciona tanto neste site quanto no Telegram (@Mantenix_bot).",
+    fl_site:"Site / Telegram",fl_mem:"Memória",lnk_wf:"Workflow no GitHub →",
+    a2_title:"Bot de atendimento",a2_desc:"Atendimento no Telegram para uma empresa fictícia: responde o FAQ e registra pedidos automaticamente.",
+    a3_title:"Triagem de e-mails",a3_desc:"Classifica e-mails recebidos (urgente, orçamento, suporte) e sugere uma resposta pronta para revisão.",
+    ct_kicker:"04 · Contato",ct_title:"Vamos conversar?",ct_sub:"Aberto a vagas de dados (júnior/trainee) e projetos de automação. Português, inglês e espanhol.",ct_email:"E-mail",
+    chat_title:"Mantenix",chat_sub:"Assistente de manutenção industrial",chat_ph:"Pergunte sobre falhas, manutenção…",
+    chat_hi:"Olá! Sou o Mantenix 🔧 Pergunte sobre falhas, manutenção preventiva ou cuidados com equipamentos industriais.",
+    chat_off:"<b>Chat em configuração</b><span>O Mantenix ainda não está ligado a este site. Enquanto isso, fale com ele no Telegram: @Mantenix_bot</span>"
+  },
+  en:{
+    nav_about:"About",nav_data:"Data Analysis",nav_agents:"AI Agents",nav_contact:"Contact",
+    hero_tag:"Data Science · Automation · AI",
+    hero_title:"I turn data into <em>decisions</em> and processes into <em>AI automations</em>.",
+    hero_lead:"I'm Willer Nunes Moreira, a Data Science technologist and Technology Mediator. I use SQL, Python, Power BI and n8n to analyze data, build dashboards and create AI agents.",
+    hero_btn1:"See projects",hero_btn2:"Try an AI agent",
+    about_kicker:"01 · About",about_title:"Technology, data and automation",
+    about_p1:"I hold a <strong>technologist degree in Data Science</strong> and work as a <strong>Technology Mediator</strong> for the City of Nova Lima, teaching computer classes and providing IT support in public schools.",
+    about_p2:"My focus is <strong>data analysis</strong> (SQL, Python and Power BI dashboards) and <strong>AI automation</strong>: n8n agents that handle support, query data and organize tasks, running on my own VPS.",
+    about_p3:"Before moving into tech, I spent 4 years in industry and mining as a mechanic and electrician. That experience gave me a practical view of operations that I bring to my data projects.",
+    skill_excel:"Advanced Excel",
+    tl1_what:"Technology Mediator",tl1_where:"City of Nova Lima: IT classes and support in public schools",
+    tl2_what:"Technologist Degree in Data Science",tl3_when:"until 2024",tl3_what:"IT Intern",
+    data_kicker:"02 · Data Analysis",data_title:"Analysis projects",
+    data_sub:"Business questions, real or public data, and a clear answer at the end, from SQL to dashboard.",
+    st_pub:"Published",st_wip:"In progress",st_live:"Live",
+    p1_title:"Industrial failure & maintenance analysis",
+    p1_desc:"Analysis of machine, failure and maintenance history using the public Microsoft Azure Predictive Maintenance dataset. It shows which machines and components fail most, how failures spread over time, and where preventive maintenance would pay off most.",
+    p1_b1:"SQL modeling and queries (machines, failures and maint tables)",p1_b2:"Interactive Power BI dashboard",p1_b3:"Documentation in Portuguese and English",
+    lnk_repo:"GitHub repository →",shot_ph:"[ Put a dashboard screenshot here: img/dashboard-manutencao.png ]",
+    p2_title:"Next analysis",p2_desc:"Placeholder for the next project (e.g., a Python/pandas analysis of public education or operations data).",
+    ag_kicker:"03 · AI Agents",ag_title:"Agents that actually work",
+    ag_sub:"Automations built with n8n and language models, running on my own VPS. Mantenix is live: try it below.",
+    a1_title:"Mantenix: industrial maintenance assistant",
+    a1_desc:"An agent that answers questions about failures, maintenance and care of industrial equipment. It uses the same data as the failure analysis project and works both on this site and on Telegram (@Mantenix_bot).",
+    fl_site:"Website / Telegram",fl_mem:"Memory",lnk_wf:"Workflow on GitHub →",
+    a2_title:"Customer support bot",a2_desc:"Telegram support for a fictional company: answers FAQs and logs orders automatically.",
+    a3_title:"Email triage",a3_desc:"Sorts incoming emails (urgent, quote, support) and drafts a reply for review.",
+    ct_kicker:"04 · Contact",ct_title:"Let's talk",ct_sub:"Open to data roles (junior/trainee) and automation projects. Portuguese, English and Spanish.",ct_email:"Email",
+    chat_title:"Mantenix",chat_sub:"Industrial maintenance assistant",chat_ph:"Ask about failures, maintenance…",
+    chat_hi:"Hi! I'm Mantenix 🔧 Ask me about failures, preventive maintenance or industrial equipment care.",
+    chat_off:"<b>Chat being set up</b><span>Mantenix isn't connected to this site yet. Meanwhile, talk to it on Telegram: @Mantenix_bot</span>"
+  }
+};
+
+let lang = "pt";
+try { lang = localStorage.getItem("lang") || (navigator.language.startsWith("pt") ? "pt" : "en"); } catch(e){}
+
+function applyLang(){
+  const d = T[lang];
+  document.documentElement.lang = lang === "pt" ? "pt-BR" : "en";
+  document.querySelectorAll("[data-i18n]").forEach(el => { if(d[el.dataset.i18n]) el.textContent = d[el.dataset.i18n]; });
+  document.querySelectorAll("[data-i18n-html]").forEach(el => { if(d[el.dataset.i18nHtml]) el.innerHTML = d[el.dataset.i18nHtml]; });
+  document.getElementById("langBtn").textContent = lang === "pt" ? "EN" : "PT";
+  if(CONFIG.p1Image){ document.getElementById("p1_shot").innerHTML = `<img src="${CONFIG.p1Image}" alt="Dashboard Power BI">`; }
+  const off = document.querySelector(".chat-off"); if(off) off.innerHTML = d.chat_off;
+}
+document.getElementById("langBtn").addEventListener("click", () => {
+  lang = lang === "pt" ? "en" : "pt";
+  try { localStorage.setItem("lang", lang); } catch(e){}
+  applyLang();
+});
+
+document.querySelectorAll("[data-link]").forEach(a => {
+  const url = CONFIG.links[a.dataset.link];
+  if(url) a.href = url;
+  if(!a.href.startsWith("mailto")){ a.target = "_blank"; a.rel = "noopener"; }
+});
+
+applyLang();
+</script>
+
+<script type="module">
+/* Chat do n8n embutido no card do Mantenix */
+const box = document.getElementById("mantenix-chat");
+const url = CONFIG.n8nChatUrl;
+const d = T[lang];
+if(!url || !url.startsWith("https://")){
+  box.innerHTML = `<div class="chat-off">${d.chat_off}</div>`;
+} else {
+  try{
+    const { createChat } = await import("https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js");
+    createChat({
+      webhookUrl: url,
+      target: "#mantenix-chat",
+      mode: "fullscreen",
+      showWelcomeScreen: false,
+      loadPreviousSession: true,
+      initialMessages: [d.chat_hi],
+      i18n: { en: { title: d.chat_title, subtitle: d.chat_sub, inputPlaceholder: d.chat_ph, footer:"", getStarted:"OK", closeButtonTooltip:"" } }
+    });
+  }catch(e){
+    box.innerHTML = `<div class="chat-off">${d.chat_off}</div>`;
+  }
+}
+</script>
 </body>
 </html>
